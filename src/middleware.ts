@@ -24,6 +24,7 @@ export default authMiddleware({
       return redirectToSignIn({ returnBackUrl: req.url });
     }
 
+    // if user is login but didn't select an org or didn't have an org, redirect to select-org
     if (auth.userId && !auth.orgId && req.nextUrl.pathname !== "/select-org") {
       const orgSelection = new URL("/select-org", req.url);
       return NextResponse.redirect(orgSelection);

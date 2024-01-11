@@ -1,4 +1,4 @@
-import Navbar from "@/app/(platform)/(dashboard)/_components/navbar";
+import { Navbar } from "@/app/(platform)/(dashboard)/_components/navbar";
 import { PropsWithChildren } from "react";
 
 const DashboardLayout = ({ children }: PropsWithChildren) => {
