@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import { Footer } from "./_components/footer";
 import { Navbar } from "./_components/navbar";
 
 const MarketingLayout = ({ children }: PropsWithChildren) => {
@@ -6,7 +7,7 @@ const MarketingLayout = ({ children }: PropsWithChildren) => {
     <div className="h-full bg-slate-100">
       <Navbar />
       <main className="bg-slate-100 pb-20 pt-40">{children}</main>
-      {/* Footer */}
+      <Footer />
     </div>
   );
 };
