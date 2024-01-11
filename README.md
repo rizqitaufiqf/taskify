@@ -5,6 +5,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 https://www.youtube.com/watch?v=pRybm9lXW2c
 ```
 
+## Note
+- root: (marketing)/page.tsx
+- font:
+  - Cal Sans Font
+  - Poppins
+
 ## Getting Started
 
 First, run the development server:
