@@ -6,10 +6,15 @@ https://www.youtube.com/watch?v=pRybm9lXW2c
 ```
 
 ## Note
-- root: (marketing)/page.tsx
-- font:
-  - Cal Sans Font
-  - Poppins
+- Root: (marketing)/page.tsx
+- Fonts:
+  - `Cal Sans Font`
+  - `Poppins`
+- Library:
+  - `Tailwind`
+  - `shadcn-ui` for UI components Library
+  - `Lucide Icon` for Icons toolkit
+  - `clerk` for authentication Library
 
 ## Getting Started
 
