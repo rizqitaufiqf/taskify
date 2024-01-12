@@ -4,6 +4,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { TOrganization } from "@/utils/types/organization.types";
 import { Activity, CreditCard, Layout, Settings } from "lucide-react";
@@ -92,5 +93,16 @@ export const NavItem = ({
         ))}
       </AccordionContent>
     </AccordionItem>
+  );
+};
+
+NavItem.Skeleton = function skeletonNavItem() {
+  return (
+    <div className="flex items-center gap-x-2">
+      <div className="relative h-10 w-10 shrink-0">
+        <Skeleton className="absolute h-full w-full" />
+      </div>
+      <Skeleton className="h-10 w-full" />
+    </div>
   );
 };
