@@ -2,19 +2,21 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Source
 ```
-https://www.youtube.com/watch?v=pRybm9lXW2c
+https://www.youtube.com/watch?v=pRybm9lXW2c 3:52
 ```
 
 ## Note
 - Root: (marketing)/page.tsx
+- Database: Postgres
 - Fonts:
   - `Cal Sans Font`
   - `Poppins`
 - Library:
   - `Tailwind`
-  - `shadcn-ui` for UI components Library
+  - `Shadcn-ui` for UI components Library
   - `Lucide Icon` for Icons toolkit
-  - `clerk` for authentication Library
+  - `Clerk` for authentication Library
+  - `Prisma`for Database ORM
 
 ## Getting Started
 
