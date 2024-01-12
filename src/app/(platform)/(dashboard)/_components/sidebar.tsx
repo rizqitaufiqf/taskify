@@ -15,7 +15,9 @@ interface SidebarProps {
   storageKey?: string;
 }
 
-export const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
+export const Sidebar = ({
+  storageKey = "t-desktop-sidebar-state",
+}: SidebarProps) => {
   const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
     storageKey,
     {},
