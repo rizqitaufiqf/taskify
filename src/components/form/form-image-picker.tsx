@@ -1,5 +1,6 @@
 "use client";
 
+import { FormErrors } from "@/components/form/form-errors";
 import { defaultImages } from "@/constants/images";
 import { unsplash } from "@/lib/unsplash";
 import { cn } from "@/lib/utils";
@@ -14,7 +15,7 @@ interface FormImagePickerProps {
   errors?: Record<string, string[] | undefined>;
 }
 
-export const FormImagePicker = ({}: FormImagePickerProps) => {
+export const FormImagePicker = ({ id, errors }: FormImagePickerProps) => {
   const random = Math.floor(Math.random() * defaultImages.length);
   const { pending } = useFormStatus();
   const [images, setImages] = useState<Array<Record<string, any>>>(
@@ -75,6 +76,15 @@ export const FormImagePicker = ({}: FormImagePickerProps) => {
               setSelectImageId(image.id);
             }}
           >
+            <input
+              type="radio"
+              id={id}
+              name={id}
+              className="hidden"
+              checked={selectImageId === image.id}
+              disabled={pending}
+              value={`${image.id}|${image.urls.thumb}|${image.urls.full}|${image.links.html}|${image.user.name}`}
+            />
             <Image
               src={image.urls.thumb}
               alt="unsplash image"
@@ -96,6 +106,7 @@ export const FormImagePicker = ({}: FormImagePickerProps) => {
           </div>
         ))}
       </div>
+      <FormErrors id="image" errors={errors} />
     </div>
   );
 };
