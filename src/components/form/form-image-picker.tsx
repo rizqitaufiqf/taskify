@@ -3,7 +3,7 @@
 import { defaultImages } from "@/constants/images";
 import { unsplash } from "@/lib/unsplash";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -21,7 +21,6 @@ export const FormImagePicker = ({}: FormImagePickerProps) => {
     defaultImages[random],
   );
   const [isLoading, setIsLoading] = useState(true);
-  //eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectImageId, setSelectImageId] = useState(null);
 
   useEffect(() => {
@@ -82,6 +81,11 @@ export const FormImagePicker = ({}: FormImagePickerProps) => {
               className="rounded-sm object-cover"
               fill
             />
+            {selectImageId === image.id && (
+              <div className="absolute inset-y-0 flex h-full w-full items-center justify-center bg-black/30">
+                <Check className="h-4 w-4 text-white" />
+              </div>
+            )}
             <Link
               href={image.links.html}
               target="_blank"
