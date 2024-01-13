@@ -36,7 +36,6 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     },
     ref,
   ) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { pending } = useFormStatus();
 
     return (
@@ -59,7 +58,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             id={id}
             placeholder={placeholder}
             type={type}
-            disabled={disabled}
+            disabled={pending || disabled}
             className={cn("h-7 px-2 py-1 text-sm", className)}
             aria-describedby={`${id}-error`}
           />
