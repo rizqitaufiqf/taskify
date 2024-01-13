@@ -27,6 +27,7 @@ export const FormImagePicker = ({}: FormImagePickerProps) => {
     return () => {
       const fetchImage = async () => {
         try {
+          // NOTE: comment code below for dev, to make not request to Unsplash
           const result = await unsplash.photos.getRandom({
             collectionIds: ["317099"],
             count: 9,
@@ -38,6 +39,7 @@ export const FormImagePicker = ({}: FormImagePickerProps) => {
           } else {
             console.log("Failed to fetch images");
           }
+          // End of comment
         } catch (e) {
           console.log(e);
           setImages(defaultImages[random]);
