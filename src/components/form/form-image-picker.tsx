@@ -5,6 +5,7 @@ import { unsplash } from "@/lib/unsplash";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 
@@ -81,6 +82,13 @@ export const FormImagePicker = ({}: FormImagePickerProps) => {
               className="rounded-sm object-cover"
               fill
             />
+            <Link
+              href={image.links.html}
+              target="_blank"
+              className="absolute bottom-0 w-full truncate bg-black/50 p-1 text-[10px] text-white opacity-0 hover:underline group-hover:opacity-100"
+            >
+              {image.user.name}
+            </Link>
           </div>
         ))}
       </div>
