@@ -12,6 +12,7 @@ interface HintProps {
   side?: "left" | "right" | "top" | "bottom";
   sideOffset?: number;
 }
+
 export const Hint = ({
   children,
   description,
