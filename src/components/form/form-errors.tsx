@@ -4,8 +4,10 @@ interface FormErrorsProps {
   id: string;
   errors?: Record<string, string[] | undefined>;
 }
+
 export const FormErrors = ({ id, errors }: FormErrorsProps) => {
   if (!errors) return null;
+
   return (
     <div
       id={`${id}-error`}
