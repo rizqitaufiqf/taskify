@@ -13,6 +13,7 @@ import {
 import { useAction } from "@/hooks/use-action";
 import { X } from "lucide-react";
 import React from "react";
+import { toast } from "sonner";
 
 interface FormPopoverProps {
   children: React.ReactNode;
@@ -30,9 +31,11 @@ export const FormPopover = ({
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
       console.log(data);
+      toast.success("Board created");
     },
     onError: (error) => {
       console.log(error);
+      toast.error(error);
     },
   });
 
