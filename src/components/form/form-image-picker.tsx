@@ -82,6 +82,7 @@ export const FormImagePicker = ({ id, errors }: FormImagePickerProps) => {
               name={id}
               className="hidden"
               checked={selectImageId === image.id}
+              onChange={() => setSelectImageId(image.id)}
               disabled={pending}
               value={`${image.id}|${image.urls.thumb}|${image.urls.full}|${image.links.html}|${image.user.name}`}
             />
