@@ -1,10 +1,10 @@
 import { XCircle } from "lucide-react";
 
-interface FormErrors {
+interface FormErrorsProps {
   id: string;
   errors?: Record<string, string[] | undefined>;
 }
-export const FormErrors = ({ id, errors }: FormErrors) => {
+export const FormErrors = ({ id, errors }: FormErrorsProps) => {
   if (!errors) return null;
   return (
     <div
