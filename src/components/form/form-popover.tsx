@@ -28,16 +28,20 @@ export const FormPopover = ({
   align,
   sideOffset = 0,
 }: FormPopoverProps) => {
-  const { execute, fieldErrors } = useAction(createBoard, {
+  const { execute, fieldErrors, setFieldErrors } = useAction(createBoard, {
+    //eslint-disable-next-line @typescript-eslint/no-unused-vars
     onSuccess: (data) => {
-      console.log(data);
       toast.success("Board created");
     },
     onError: (error) => {
-      console.log(error);
       toast.error(error);
     },
   });
+
+  const [openPopover, setOpenPopover] = React.useState<boolean>(false);
+  if (!openPopover && fieldErrors !== undefined) {
+    setFieldErrors(undefined);
+  }
 
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
@@ -45,7 +49,7 @@ export const FormPopover = ({
   };
 
   return (
-    <Popover>
+    <Popover open={openPopover} onOpenChange={setOpenPopover}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent
         align={align}
