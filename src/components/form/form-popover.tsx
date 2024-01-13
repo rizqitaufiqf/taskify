@@ -1,6 +1,7 @@
 "use client";
 
 import { createBoard } from "@/actions/create-board";
+import { FormImagePicker } from "@/components/form/form-image-picker";
 import { FormInput } from "@/components/form/form-input";
 import { FormSubmit } from "@/components/form/form-submit";
 import { Button } from "@/components/ui/button";
@@ -70,6 +71,7 @@ export const FormPopover = ({
         </PopoverClose>
         <form className="space-y-4" action={onSubmit}>
           <div className="space-y-4">
+            <FormImagePicker id="image" errors={fieldErrors} />
             <FormInput
               id="title"
               label="Board title"
