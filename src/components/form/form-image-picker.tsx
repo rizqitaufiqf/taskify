@@ -16,15 +16,13 @@ interface FormImagePickerProps {
 }
 
 export const FormImagePicker = ({ id, errors }: FormImagePickerProps) => {
-  const random = Math.floor(Math.random() * defaultImages.length);
   const { pending } = useFormStatus();
-  const [images, setImages] = useState<Array<Record<string, any>>>(
-    defaultImages[random],
-  );
+  const [images, setImages] = useState<Array<Record<string, any>>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectImageId, setSelectImageId] = useState(null);
 
   useEffect(() => {
+    const random = Math.floor(Math.random() * defaultImages.length);
     return () => {
       const fetchImage = async () => {
         try {
@@ -51,7 +49,7 @@ export const FormImagePicker = ({ id, errors }: FormImagePickerProps) => {
 
       void fetchImage();
     };
-  }, [random]);
+  }, []);
 
   if (isLoading) {
     return (
