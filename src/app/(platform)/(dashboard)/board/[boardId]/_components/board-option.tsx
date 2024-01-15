@@ -9,15 +9,32 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useAction } from "@/hooks/use-action";
+import { useAuth } from "@clerk/nextjs";
 import { MoreHorizontal, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useLocalStorage } from "usehooks-ts";
 
 interface BoardOptionProps {
   id: string;
 }
 
 export const BoardOption = ({ id }: BoardOptionProps) => {
+  const { orgId } = useAuth();
+  const router = useRouter();
+  //eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [ToastInfo, setToastInfo] = useLocalStorage<Record<string, any>>(
+    "toast-info",
+    {},
+  );
+
   const { execute, isLoading } = useAction(deleteBoard, {
+    onSuccess: (data) => {
+      setToastInfo({
+        success: `Board "${data.title}" deleted successfully.`,
+      });
+      router.push(`/organization/${orgId}`);
+    },
     onError: (error) => {
       toast.error(error);
     },

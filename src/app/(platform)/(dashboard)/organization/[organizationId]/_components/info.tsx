@@ -4,9 +4,36 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useOrganization } from "@clerk/nextjs";
 import { CreditCard } from "lucide-react";
 import Image from "next/image";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 
 export const Info = () => {
   const { organization, isLoaded } = useOrganization();
+  const toastInfo: null | Record<string, any> =
+    useReadLocalStorage("toast-info");
+  const [toastInfoLS, setToastInfoLS] = useLocalStorage<Record<string, any>>(
+    "toast-info",
+    toastInfo ?? {},
+  );
+
+  //show toast if there is any toast-info data in local storage
+  useEffect(() => {
+    if (toastInfoLS && (toastInfoLS.success || toastInfoLS.error)) {
+      if (toastInfoLS.success) {
+        toast.success(toastInfoLS.success);
+      }
+      if (toastInfoLS.error) {
+        toast.error(toastInfoLS.error);
+      }
+      setToastInfoLS((prevToastInfoLS: Record<string, any>) => {
+        if (Object.keys(prevToastInfoLS).length > 0) {
+          return {};
+        }
+        return prevToastInfoLS;
+      });
+    }
+  }, [toastInfoLS, setToastInfoLS]);
 
   if (!isLoaded) return <Info.Skeleton />;
 

@@ -5,8 +5,7 @@ import { InputType, ReturnType } from "@/actions/delete-board/types";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { Board } from "@prisma/client";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
@@ -14,8 +13,10 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
   const { id } = data;
 
+  let deletedData: Board;
+
   try {
-    await db.board.delete({
+    deletedData = await db.board.delete({
       where: {
         id,
         orgId,
@@ -28,8 +29,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
 
-  revalidatePath(`/organization/${orgId}`);
-  redirect(`/organization/${orgId}`);
+  // revalidatePath(`/organization/${orgId}`);
+  // redirect(`/organization/${orgId}`);
+  return { data: deletedData };
 };
 
 export const deleteBoard = createSafeAction(DeleteBoardSchema, handler);
