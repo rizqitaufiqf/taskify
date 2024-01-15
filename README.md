@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Source
 ```
-https://www.youtube.com/watch?v=pRybm9lXW2c 5:49
+https://www.youtube.com/watch?v=pRybm9lXW2c
 ```
 
 ## Note
