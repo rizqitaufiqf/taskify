@@ -48,8 +48,7 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
     const boardId = formData.get("boardId") as string;
 
     if (title === data.title) disableEditing();
-
-    void execute({ title, id, boardId });
+    else void execute({ title, id, boardId });
   };
 
   const onBlur = () => {
@@ -65,8 +64,13 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
     <div className="flex items-start justify-between gap-x-2 px-2 pt-2 text-sm font-semibold">
       {isEditing ? (
         <form className="flex-1 px-[2px]" ref={formRef} action={handleSubmit}>
-          <input hidden id="id" name="id" value={data.id} />
-          <input hidden id="boardId" name="boardId" value={data.boardId} />
+          <input hidden id="id" name="id" defaultValue={data.id} />
+          <input
+            hidden
+            id="boardId"
+            name="boardId"
+            defaultValue={data.boardId}
+          />
           <FormInput
             id="title"
             ref={inputRef}
