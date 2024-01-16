@@ -17,6 +17,9 @@ https://www.youtube.com/watch?v=pRybm9lXW2c
   - `Lucide Icon` for Icons toolkit
   - `Clerk` for authentication Library
   - `Prisma`for Database ORM
+  - `Sonner` for toast
+  - `Zod` for schema validation
+  - `Zustand` state management
 
 ## Getting Started
 
