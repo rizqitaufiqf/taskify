@@ -2,7 +2,7 @@
 CREATE TABLE "List" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "order" INTEGER NOT NULL,
+    "position" INTEGER NOT NULL,
     "boardId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE "List" (
 CREATE TABLE "Card" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "order" INTEGER NOT NULL,
+    "position" INTEGER NOT NULL,
     "description" TEXT,
     "listId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
