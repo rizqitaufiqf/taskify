@@ -1,4 +1,5 @@
 import { updateList } from "@/actions/update-list";
+import { ListOption } from "@/app/(platform)/(dashboard)/board/[boardId]/_components/list-option";
 import { FormInput } from "@/components/form/form-input";
 import { useAction } from "@/hooks/use-action";
 import { List } from "@prisma/client";
@@ -83,6 +84,7 @@ export const ListHeader = ({ data }: ListHeaderProps) => {
           {title}
         </div>
       )}
+      <ListOption data={data} onAddCard={() => {}} />
     </div>
   );
 };
