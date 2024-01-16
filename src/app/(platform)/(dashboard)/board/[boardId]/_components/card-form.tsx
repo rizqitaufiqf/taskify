@@ -21,7 +21,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
     const params = useParams();
     const formRef = useRef<ElementRef<"form">>(null);
 
-    const { execute, fieldErrors } = useAction(createCard, {
+    const { execute, fieldErrors, setFieldErrors } = useAction(createCard, {
       onSuccess: (data) => {
         toast.success(`Card "${data.title}" created successfully.`);
       },
@@ -30,11 +30,16 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
       },
     });
 
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") disableEditing();
+    const extendedDisableEditing = () => {
+      disableEditing();
+      setFieldErrors(undefined);
     };
-    useOnClickOutside(formRef, () => disableEditing());
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") extendedDisableEditing();
+    };
     useEventListener("keydown", onKeyDown);
+    useOnClickOutside(formRef, extendedDisableEditing);
 
     const onTextareaKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (
       e,
@@ -70,7 +75,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
           <input hidden id="listId" defaultValue={listId} name="listId" />
           <div className="flex items-center gap-x-1">
             <FormSubmit>Add card</FormSubmit>
-            <Button onClick={disableEditing} variant="ghost" size="sm">
+            <Button onClick={extendedDisableEditing} variant="ghost" size="sm">
               <X className="h-5 w-5" />
             </Button>
           </div>

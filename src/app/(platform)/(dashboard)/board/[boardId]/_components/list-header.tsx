@@ -5,7 +5,7 @@ import { useAction } from "@/hooks/use-action";
 import { List } from "@prisma/client";
 import { ElementRef, useRef, useState } from "react";
 import { toast } from "sonner";
-import { useEventListener } from "usehooks-ts";
+import { useEventListener, useOnClickOutside } from "usehooks-ts";
 
 interface ListHeaderProps {
   data: List;
@@ -19,6 +19,17 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
 
+  const { execute, fieldErrors, setFieldErrors } = useAction(updateList, {
+    onSuccess: (data) => {
+      toast.success(`list "${data.title}" updated successfully.`);
+      setTitle(data.title);
+      disableEditing();
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
   const enableEditing = () => {
     setIsEditing(true);
     setTimeout(() => {
@@ -29,18 +40,8 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
 
   const disableEditing = () => {
     setIsEditing(false);
+    setFieldErrors(undefined);
   };
-
-  const { execute } = useAction(updateList, {
-    onSuccess: (data) => {
-      toast.success(`list "${data.title}" updated successfully.`);
-      setTitle(data.title);
-      disableEditing();
-    },
-    onError: (error) => {
-      toast.error(error);
-    },
-  });
 
   const handleSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
@@ -56,9 +57,11 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
   };
 
   const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") formRef.current?.requestSubmit();
+    // if (e.key === "Escape") formRef.current?.requestSubmit();
+    if (e.key === "Escape") disableEditing();
   };
   useEventListener("keydown", onKeyDown);
+  useOnClickOutside(formRef, disableEditing);
 
   return (
     <div className="flex items-start justify-between gap-x-2 px-2 pt-2 text-sm font-semibold">
@@ -77,6 +80,7 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
             placeholder="Enter list title.."
             defaultValue={title}
             onBlur={onBlur}
+            errors={fieldErrors}
             className="h-7 truncate border-transparent bg-transparent px-[7px] py-1 text-sm font-medium transition hover:border-input focus:border-input focus:bg-white"
           />
           <button type="submit" hidden></button>

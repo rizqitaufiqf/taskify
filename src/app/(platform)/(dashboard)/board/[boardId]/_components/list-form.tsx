@@ -20,18 +20,7 @@ export const ListForm = () => {
   const inputRef = useRef<ElementRef<"input">>(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  const enableEditing = () => {
-    setIsEditing(true);
-    setTimeout(() => {
-      inputRef.current?.focus();
-    });
-  };
-
-  const disableEditing = () => {
-    setIsEditing(false);
-  };
-
-  const { execute, fieldErrors } = useAction(createList, {
+  const { execute, fieldErrors, setFieldErrors } = useAction(createList, {
     onSuccess: (data) => {
       toast.success(`List "${data.title}" successfully`);
       disableEditing();
@@ -41,6 +30,18 @@ export const ListForm = () => {
       toast.error(error);
     },
   });
+
+  const enableEditing = () => {
+    setIsEditing(true);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    });
+  };
+
+  const disableEditing = () => {
+    setIsEditing(false);
+    setFieldErrors(undefined);
+  };
 
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") disableEditing();
