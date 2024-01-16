@@ -1,3 +1,4 @@
+import { copyList } from "@/actions/copy-list";
 import { deleteList } from "@/actions/delete-list";
 import { FormSubmit } from "@/components/form/form-submit";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,23 @@ export const ListOption = ({ data, onAddCard }: ListOptionProps) => {
     void executeDelete({ id, boardId });
   };
 
+  const { execute: executeCopy } = useAction(copyList, {
+    onSuccess: (data) => {
+      toast.success(`List "${data.title}" copied successfully.`);
+      closeRef.current?.click();
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const onCopy = (formData: FormData) => {
+    const id = formData.get("id") as string;
+    const boardId = formData.get("boardId") as string;
+
+    void executeCopy({ id, boardId });
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -65,7 +83,7 @@ export const ListOption = ({ data, onAddCard }: ListOptionProps) => {
         >
           Add Card...
         </Button>
-        <form>
+        <form action={onCopy}>
           <input hidden name="id" id="id" value={data.id}></input>
           <input
             hidden
