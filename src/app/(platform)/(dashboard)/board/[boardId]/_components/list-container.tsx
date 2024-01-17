@@ -1,10 +1,14 @@
 "use client";
 
+import { updateCardOrder } from "@/actions/update-card-order";
+import { updateListOrder } from "@/actions/update-list-order";
 import { ListForm } from "@/app/(platform)/(dashboard)/board/[boardId]/_components/list-form";
 import { ListItem } from "@/app/(platform)/(dashboard)/board/[boardId]/_components/list-item";
+import { useAction } from "@/hooks/use-action";
 import { ListWithCards } from "@/utils/types/list-with-cards.type";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface ListContainerProps {
   data: ListWithCards[];
@@ -25,6 +29,23 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 
 //eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ListContainer = ({ data, boardId }: ListContainerProps) => {
+  const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: () => {
+      toast.success("list reordered successfully");
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+  const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
+    onSuccess: () => {
+      toast.success("card reordered successfully");
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
   const [orderedData, setOrderedData] = useState(data);
 
   useEffect(() => {
@@ -49,7 +70,7 @@ export const ListContainer = ({ data, boardId }: ListContainerProps) => {
       );
 
       setOrderedData(items);
-      // TODO: Server Action
+      void executeUpdateListOrder({ items, boardId });
     }
 
     // user move a card
@@ -89,7 +110,7 @@ export const ListContainer = ({ data, boardId }: ListContainerProps) => {
         sourceList.cards = reorderCards;
 
         setOrderedData(newOrderedData);
-        // TODO: Server Action
+        void executeUpdateCardOrder({ items: reorderCards, boardId });
 
         // user move a card from one list to another list
       } else {
@@ -108,7 +129,7 @@ export const ListContainer = ({ data, boardId }: ListContainerProps) => {
         destList.cards.forEach((card, index) => (card.position = index));
 
         setOrderedData(newOrderedData);
-        // TODO: Server Action
+        void executeUpdateCardOrder({ items: destList.cards, boardId });
       }
     }
   };
