@@ -1,5 +1,3 @@
-"use client";
-
 import { updateCard } from "@/actions/update-card";
 import { FormInput } from "@/components/form/form-input";
 import { Skeleton } from "@/components/ui/skeleton";

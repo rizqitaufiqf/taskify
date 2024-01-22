@@ -1,5 +1,6 @@
 "use client";
 
+import { Description } from "@/components/modals/card-modal/description";
 import { CardModalHeader } from "@/components/modals/card-modal/header";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useCardModal } from "@/hooks/use-card-modal";
@@ -27,6 +28,17 @@ export const CardModal = () => {
         ) : (
           <CardModalHeader data={cardData} />
         )}
+        <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
+          <div className="col-span-3">
+            <div className="w-full space-y-6">
+              {!cardData ? (
+                <Description.Skeleton />
+              ) : (
+                <Description data={cardData} />
+              )}
+            </div>
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
