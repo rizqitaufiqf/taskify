@@ -148,7 +148,7 @@ export const ListContainer = ({ data, boardId }: ListContainerProps) => {
             ))}
             {provided.placeholder}
             <ListForm />
-            <div className="flex w-1 shrink-0" />;
+            <div className="flex w-1 shrink-0" />
           </ol>
         )}
       </Droppable>
