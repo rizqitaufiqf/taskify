@@ -1,5 +1,6 @@
 "use client";
 
+import { Actions } from "@/components/modals/card-modal/actions";
 import { Description } from "@/components/modals/card-modal/description";
 import { CardModalHeader } from "@/components/modals/card-modal/header";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -11,8 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 export const CardModal = () => {
   const id = useCardModal((state) => state.id);
   const isOpen = useCardModal((state) => state.isOpen);
-  //eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onOpen = useCardModal((state) => state.onOpen);
   const onClose = useCardModal((state) => state.onClose);
 
   const { data: cardData } = useQuery<CardWithList>({
@@ -38,6 +37,7 @@ export const CardModal = () => {
               )}
             </div>
           </div>
+          {!cardData ? <Actions.Skeleton /> : <Actions data={cardData} />}
         </div>
       </DialogContent>
     </Dialog>
