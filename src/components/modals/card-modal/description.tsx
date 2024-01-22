@@ -61,8 +61,6 @@ export const Description = ({ data }: DescriptionProps) => {
     const description = formData.get("description") as string;
     const boardId = params.boardId as string;
 
-    console.log(description, boardId);
-
     void execute({ id: data.id, title: data.title, description, boardId });
   };
 

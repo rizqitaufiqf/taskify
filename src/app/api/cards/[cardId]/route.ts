@@ -7,7 +7,6 @@ export async function GET(
   { params }: { params: { cardId: string } },
 ) {
   try {
-    console.log(request);
     const { userId, orgId } = auth();
     if (!userId || !orgId) {
       return new NextResponse("Unauthorized", { status: 401 });
