@@ -1,5 +1,26 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Source
+```
+https://www.youtube.com/watch?v=pRybm9lXW2c
+```
+
+## Note
+- Root: (marketing)/page.tsx
+- Database: Postgres
+- Fonts:
+  - `Cal Sans Font`
+  - `Poppins`
+- Library:
+  - `Tailwind`
+  - `Shadcn-ui` for UI components Library
+  - `Lucide Icon` for Icons toolkit
+  - `Clerk` for authentication Library
+  - `Prisma`for Database ORM
+  - `Sonner` for toast
+  - `Zod` for schema validation
+  - `Zustand` state management
+
 ## Getting Started
 
 First, run the development server:
