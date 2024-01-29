@@ -5,6 +5,7 @@ import { InputType, ReturnType } from "@/actions/delete-board/types";
 import { createAuditLog } from "@/lib/create-audit-log";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/db";
+import { decreaseAvailableCount } from "@/lib/org-limit";
 import { auth } from "@clerk/nextjs";
 import { ACTION, Board, ENTITY_TYPE } from "@prisma/client";
 
@@ -23,6 +24,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         orgId,
       },
     });
+
+    await decreaseAvailableCount();
 
     await createAuditLog({
       entityTitle: deletedData.title,
