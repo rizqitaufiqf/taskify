@@ -2,10 +2,11 @@
 
 import { UpdateBoardSchema } from "@/actions/update-board/schema";
 import { InputType, ReturnType } from "@/actions/update-board/types";
+import { createAuditLog } from "@/lib/create-audit-log";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { Board } from "@prisma/client";
+import { ACTION, Board, ENTITY_TYPE } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
@@ -24,6 +25,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         id,
         orgId,
       },
+    });
+
+    await createAuditLog({
+      entityTitle: board.title,
+      entityId: board.id,
+      entityType: ENTITY_TYPE.BOARD,
+      action: ACTION.UPDATE,
     });
   } catch (e) {
     console.log(e);

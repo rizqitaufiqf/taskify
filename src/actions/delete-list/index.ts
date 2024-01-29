@@ -2,10 +2,11 @@
 
 import { DeleteListSchema } from "@/actions/delete-list/schema";
 import { InputType, ReturnType } from "@/actions/delete-list/types";
+import { createAuditLog } from "@/lib/create-audit-log";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { List } from "@prisma/client";
+import { ACTION, ENTITY_TYPE, List } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
@@ -25,6 +26,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
           orgId,
         },
       },
+    });
+
+    await createAuditLog({
+      entityTitle: deletedList.title,
+      entityId: deletedList.id,
+      entityType: ENTITY_TYPE.LIST,
+      action: ACTION.DELETE,
     });
   } catch (e) {
     console.log(e);

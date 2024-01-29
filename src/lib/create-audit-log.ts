@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { auth, currentUser } from "@clerk/nextjs";
 import { ACTION, ENTITY_TYPE } from "@prisma/client";
+import { NextResponse } from "next/server";
 
 interface Props {
   entityId: string;
@@ -13,12 +14,13 @@ export const createAuditLog = async (props: Props) => {
   try {
     const { orgId } = auth();
     const user = await currentUser();
+    console.log(user);
 
-    if (!user || !orgId) throw new Error("User not found!");
+    if (!user || !orgId) return Promise.reject("User not found!");
 
     const { entityId, entityType, entityTitle, action } = props;
 
-    await db.auditLog.create({
+    const auditLogs = await db.auditLog.create({
       data: {
         orgId,
         entityType,
@@ -27,8 +29,14 @@ export const createAuditLog = async (props: Props) => {
         action,
         userId: user.id,
         userImage: user?.imageUrl,
-        userName: user?.firstName + " " + user?.lastName,
+        userName: user?.username
+          ? user.username
+          : user?.firstName + " " + user?.lastName,
       },
     });
-  } catch (e) {}
+
+    return NextResponse.json(auditLogs);
+  } catch (error) {
+    console.log("[AUDIT_LOG_ERROR]", error);
+  }
 };
