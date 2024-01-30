@@ -1,12 +1,14 @@
 "use client";
 
 import { Actions } from "@/components/modals/card-modal/actions";
+import { Activity } from "@/components/modals/card-modal/activity";
 import { Description } from "@/components/modals/card-modal/description";
 import { CardModalHeader } from "@/components/modals/card-modal/header";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useCardModal } from "@/hooks/use-card-modal";
 import { fetcher } from "@/lib/fetcher";
 import { CardWithList } from "@/utils/types/list-with-cards.type";
+import { AuditLog } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 export const CardModal = () => {
@@ -17,6 +19,11 @@ export const CardModal = () => {
   const { data: cardData } = useQuery<CardWithList>({
     queryKey: ["card", id],
     queryFn: () => fetcher(`/api/cards/${id}`),
+  });
+
+  const { data: auditLogData } = useQuery<AuditLog[]>({
+    queryKey: ["card-logs", id],
+    queryFn: () => fetcher(`/api/cards/${id}/logs`),
   });
 
   return (
@@ -34,6 +41,11 @@ export const CardModal = () => {
                 <Description.Skeleton />
               ) : (
                 <Description data={cardData} />
+              )}
+              {!auditLogData ? (
+                <Activity.Skeleton />
+              ) : (
+                <Activity items={auditLogData} />
               )}
             </div>
           </div>

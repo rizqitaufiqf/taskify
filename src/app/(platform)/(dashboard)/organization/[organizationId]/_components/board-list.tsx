@@ -1,7 +1,10 @@
 import { FormPopover } from "@/components/form/form-popover";
 import { Hint } from "@/components/hint";
 import { Skeleton } from "@/components/ui/skeleton";
+import { MAX_FREE_BOARDS } from "@/constants/boards";
 import { db } from "@/lib/db";
+import { getAvailableCount } from "@/lib/org-limit";
+import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs";
 import { HelpCircle, User2 } from "lucide-react";
 import Link from "next/link";
@@ -12,6 +15,9 @@ export const BoardList = async () => {
   if (!orgId) {
     return redirect("/select-org");
   }
+
+  const availableBoard = await getAvailableCount();
+  const isPro = await checkSubscription();
 
   const boards = await db.board.findMany({
     where: {
@@ -45,7 +51,13 @@ export const BoardList = async () => {
             className="relative flex aspect-video h-full w-full flex-col items-center justify-center gap-y-1 rounded-sm bg-muted transition hover:opacity-75"
           >
             <p className="text-sm">Create new board</p>
-            <span className="text-xs">5 remaining</span>
+            {isPro ? (
+              <></>
+            ) : (
+              <span className="text-xs">
+                {MAX_FREE_BOARDS - availableBoard} remaining
+              </span>
+            )}
             <Hint
               description="Free Workspaces can have up to 5 boards. For unlimited boards, upgrade to a paid plan."
               sideOffset={40}
