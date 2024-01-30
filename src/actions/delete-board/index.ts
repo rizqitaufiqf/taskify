@@ -6,6 +6,7 @@ import { createAuditLog } from "@/lib/create-audit-log";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/db";
 import { decreaseAvailableCount } from "@/lib/org-limit";
+import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs";
 import { ACTION, Board, ENTITY_TYPE } from "@prisma/client";
 
@@ -14,6 +15,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   if (!userId || !orgId) return { error: "Unauthorized" };
 
   const { id } = data;
+
+  const isPro = await checkSubscription();
 
   let deletedData: Board;
 
@@ -25,7 +28,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       },
     });
 
-    await decreaseAvailableCount();
+    !isPro && (await decreaseAvailableCount());
 
     await createAuditLog({
       entityTitle: deletedData.title,
