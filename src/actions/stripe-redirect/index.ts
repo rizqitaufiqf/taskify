@@ -14,7 +14,7 @@ const handler = async (): Promise<ReturnType> => {
   const user = await currentUser();
   if (!user || !userId || !orgId) return { error: "Unauthorized" };
 
-  const settingsUrl = absoluteUrl(`/organizations/${orgId}`);
+  const settingsUrl = absoluteUrl(`/organization/${orgId}`);
   let url = "";
 
   try {
@@ -68,7 +68,7 @@ const handler = async (): Promise<ReturnType> => {
     };
   }
 
-  revalidatePath(`/organizations/${orgId}`);
+  revalidatePath(`/organization/${orgId}`);
   return { data: url };
 };
 
