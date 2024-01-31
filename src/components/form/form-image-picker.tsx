@@ -23,32 +23,30 @@ export const FormImagePicker = ({ id, errors }: FormImagePickerProps) => {
 
   useEffect(() => {
     const random = Math.floor(Math.random() * defaultImages.length);
-    return () => {
-      const fetchImage = async () => {
-        try {
-          // NOTE: comment code below for dev, to make not request to Unsplash
-          const result = await unsplash.photos.getRandom({
-            collectionIds: ["317099"],
-            count: 9,
-          });
+    const fetchImage = async () => {
+      try {
+        // NOTE: comment code below for dev, to make not request to Unsplash
+        const result = await unsplash.photos.getRandom({
+          collectionIds: ["317099"],
+          count: 9,
+        });
 
-          if (result && result.response) {
-            const resultImages = result.response as Array<Record<string, any>>;
-            setImages(resultImages);
-          } else {
-            console.log("Failed to fetch images");
-          }
-          // End of comment
-        } catch (e) {
-          console.log(e);
-          setImages(defaultImages[random]);
-        } finally {
-          setIsLoading(false);
+        if (result && result.response) {
+          const resultImages = result.response as Array<Record<string, any>>;
+          setImages(resultImages);
+        } else {
+          console.log("Failed to fetch images");
         }
-      };
-
-      void fetchImage();
+        // End of comment
+      } catch (e) {
+        console.log(e);
+        setImages(defaultImages[random]);
+      } finally {
+        setIsLoading(false);
+      }
     };
+
+    void fetchImage();
   }, []);
 
   if (isLoading) {
